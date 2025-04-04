@@ -1,0 +1,756 @@
+/**
+ * Main Stylesheet
+ * Version: 1.0
+ * Author: Prathyusha M
+ * Last Updated: 2025
+ * Description: Complete styling for a responsive website including navigation,
+ * hero sections, content sections, forms, modals and responsive design.
+ */
+
+/* =========================================
+   CSS Reset and Base Styles
+   Provides consistent starting point across browsers
+   Implements border-box model and smooth scrolling
+   ========================================= */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* =========================================
+   Typography and Common Elements
+   Establishes consistent text hierarchy
+   Uses modern color scheme with #2c3e50 for headings
+   ========================================= */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5em;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+/* =========================================
+   Header and Navigation
+   Fixed position header with semi-transparent background
+   Responsive navigation with hover effects
+   Maximum width constraint of 1400px
+   ========================================= */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 1rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo img {
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.nav-links a:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* =========================================
+   Hero Section
+   Full-viewport height with gradient overlay
+   Centered content layout with responsive text
+   Background image with semi-transparent overlay
+   ========================================= */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(61, 40, 181, 0.6), rgba(48, 27, 165, 0.6)),
+                url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 70px;
+}
+
+.hero-content {
+    color: white;
+    max-width: 800px;
+    padding: 2rem;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #e74c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #c0392b;
+}
+
+/* =========================================
+   Section Common Styles
+   Consistent padding and minimum height
+   Alternating background colors
+   ========================================= */
+section {
+    padding: 5rem 10%;
+    min-height: 50vh;
+}
+
+section:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* =========================================
+   About Section Styles
+   Clean layout with maximum width constraints
+   Custom bullet points using pseudo-elements
+   ========================================= */
+.about {
+    background: #ffff;
+    color: black;
+    padding: 5rem 0;
+    scroll-margin-top: 100px;
+}
+
+.about .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.about h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.about-content p {
+    margin-bottom: 1.5rem;
+}
+
+.about-content ul {
+    list-style-type: none;
+    padding-left: 1.5rem;
+}
+
+.about-content ul li {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.about-content ul li:before {
+    content: "•";
+    color: #e74c3c;
+    font-weight: bold;
+    position: absolute;
+    left: -1.5rem;
+}
+
+/* =========================================
+   Modal Styles
+   Flexible modal system with animations
+   Semi-transparent overlay and centered content
+   Responsive sizing with maximum width
+   ========================================= */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.modal:target {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-close {
+    text-decoration: none;
+    color: #666;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.5rem;
+}
+
+.modal-close:hover {
+    color: #e74c3c;
+}
+
+/* =========================================
+   Form Styles
+   Consistent input styling and spacing
+   Interactive button states
+   Flexible column layout
+   ========================================= */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-form input {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.auth-form button {
+    padding: 1rem;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-form button:hover {
+    background: #c0392b;
+}
+
+.auth-section {
+    padding: 80px 0;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+}
+
+.standalone-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.form-footer a {
+    color: #e74c3c;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   Products Section Styles
+   Responsive grid layout with auto-fit
+   Card design with hover effects
+   ========================================= */
+.product-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.category {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.category:hover {
+    transform: translateY(-10px);
+}
+
+.category h3 {
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+.category ul {
+    list-style-position: inside;
+    padding-left: 1rem;
+}
+
+/* =========================================
+   Product Catalog Section Styles
+   Responsive image grid with hover effects
+   Consistent image sizing with object-fit
+   ========================================= */
+/* Product Catalog Section */
+.products-catalog {
+    padding: 3rem 5%;
+    background: #f8f9fa;
+    scroll-margin-top: 80px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+}
+
+.product-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-details {
+    padding: 0.75rem;
+}
+
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.product-id {
+    background: #e74c3c;
+    color: white;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+}
+
+.product-name {
+    font-size: 1rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.product-specs {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.product-specs th,
+.product-specs td {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-specs th {
+    color: #666;
+    font-weight: 600;
+    width: 35%;
+    text-align: left;
+}
+
+.product-pricing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.price-current,
+.price-max {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-current .label,
+.price-max .label {
+    color: #666;
+    font-size: 0.75rem;
+}
+
+.price-current .value {
+    color: #e74c3c;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.price-max .value {
+    color: #666;
+    font-size: 0.875rem;
+    text-decoration: line-through;
+}
+
+.discount {
+    grid-column: 1 / -1;
+    text-align: right;
+}
+
+.discount-tag {
+    background: #27ae60;
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .products-catalog {
+        padding: 2rem 3%;
+        scroll-margin-top: 120px; 
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+    
+    .product-image {
+        height: 140px;
+    }
+    
+    .product-details {
+        padding: 0.5rem;
+    }
+    
+    .product-name {
+        font-size: 0.875rem;
+    }
+    
+    .product-specs,
+    .product-pricing {
+        font-size: 0.75rem;
+    }
+}
+
+/* =========================================
+   Services Section Styles 
+   Card-based layout with icons
+   Hover lift effect and consistent spacing
+   ========================================= */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card i {
+    font-size: 2.5rem;
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+/* =========================================
+   Contact Section Styles
+   Two-column layout for larger screens
+   Responsive form with custom styling
+   ========================================= */
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.contact-info {
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info p {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form button {
+    padding: 1rem 2rem;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+    background: #c0392b;
+}
+
+/* =========================================
+   Footer Styles
+   Multi-column layout with responsive design
+   bottom section separation
+   ========================================= */
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 4rem 10% 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-section h3 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #e74c3c;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   Testimonials Section Styles
+   Flexible card layout with shadow effects
+   Responsive grid system
+   ========================================= */
+.testimonials {
+    background: #fff;
+    padding: 50px 20px;
+    scroll-margin-top: 100px;
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   Responsive Design
+   Mobile-first approach with breakpoints
+   Stack navigation on mobile
+   Adjusted spacing for smaller screens
+   ========================================= */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+}
+
+/* =========================================
+   Animation Keyframes
+   Reusable animations for various elements
+   Smooth transitions and transforms
+   ========================================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease forwards;
+}
