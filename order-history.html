@@ -1,0 +1,121 @@
+<!-- 
+===========================================
+Natural Stone Hub Website
+===========================================
+Version: 1.0
+Author: Prathyusha M
+Last Updated: 2025
+Description: Modern, responsive website for Natural Stone Hub featuring product showcase,
+gallery, services, and contact information.
+===========================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Natural Stone Hub</title>
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="./js/script.js" defer></script>
+    <script src="./js/order-history.js" defer></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="./images/logo.jpg" alt="Natural Stone Hub Logo">
+            </div>
+            <div class="cart-container">
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Order History Section -->
+    <section class="order-history-section">
+        <div class="container">
+            <h2>Your Order History</h2>
+            <div class="order-history-container">
+                <!-- Orders will be dynamically populated here -->
+                <div class="no-orders-message">You haven't placed any orders yet.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Forms - keep on every page -->
+    <div id="login-modal" class="modal" role="dialog" aria-labelledby="loginTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="loginTitle">Login</h2>
+                <a href="#" class="modal-close" aria-label="Close">&times;</a>
+            </div>
+            <form class="auth-form" novalidate>
+                <input type="email" placeholder="Email" required 
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       title="Please enter a valid email address">
+                <input type="password" placeholder="Password" required
+                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                       title="Password must be at least 8 characters long and include at least one letter, one number, and one special character">
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal" role="dialog" aria-labelledby="registerTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="registerTitle">Register</h2>
+                <a href="#" class="modal-close" aria-label="Close">&times;</a>
+            </div>
+            <form class="auth-form" novalidate>
+                <input type="text" placeholder="Full Name" required
+                       pattern="[A-Za-z\s]{2,}"
+                       title="Please enter at least 2 characters">
+                <input type="email" placeholder="Email" required
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       title="Please enter a valid email address">
+                <input type="password" placeholder="Password" required
+                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                       title="Password must be at least 8 characters long and include at least one letter, one number, and one special character">
+                <input type="password" placeholder="Confirm Password" required
+                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                       title="Password must be at least 8 characters long and include at least one letter, one number, and one special character">
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 
+    Footer Section
+    Purpose: Site navigation
+    Features: Responsive grid
+    -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natural Stone Hub</h3>
+                <p>Your one-stop destination for premium interior & exterior solutions!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Natural Stone Hub. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

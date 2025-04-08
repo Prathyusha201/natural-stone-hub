@@ -1,0 +1,161 @@
+<!-- 
+===========================================
+Natural Stone Hub Website
+===========================================
+Version: 1.0
+Author: Prathyusha M
+Last Updated: 2025
+Description: Modern, responsive website for Natural Stone Hub featuring product showcase,
+gallery, services, and contact information.
+===========================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Natural Stone Hub</title>
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="./js/script.js" defer></script>
+    <script src="./js/cart.js" defer></script>
+    <script src="./js/checkout.js" defer></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="./images/logo.jpg" alt="Natural Stone Hub Logo">
+            </div>
+        </nav>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <h2>Checkout</h2>
+            <div class="checkout-container">
+                <div class="checkout-form-container">
+                    <form class="checkout-form" novalidate>
+                        <h3>Shipping Information</h3>
+                        <div class="form-group">
+                            <input type="text" id="fullName" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="address" placeholder="Address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="city" placeholder="City" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="state" placeholder="State" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="zipCode" placeholder="Postal Code" required>
+                        </div>
+                        
+                        <h3>Payment Information</h3>
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" checked>
+                                <label for="creditCard">Credit/Debit Card</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="upi" name="paymentMethod" value="upi">
+                                <label for="upi">UPI</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="cod" name="paymentMethod" value="cod">
+                                <label for="cod">Cash on Delivery</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Credit Card Fields -->
+                        <div id="creditCardFields">
+                            <div class="form-group">
+                                <input type="text" id="cardNumber" placeholder="Card Number" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="cvv" placeholder="CVV" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="cardName" placeholder="Name on Card" required>
+                            </div>
+                        </div>
+                        
+                        <!-- UPI Fields -->
+                        <div id="upiFields" style="display: none;">
+                            <div class="form-group">
+                                <input type="text" id="upiId" placeholder="UPI ID (e.g., name@bank)" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="place-order-btn">Place Order</button>
+                    </form>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div class="order-items">
+                        <!-- Order items will be dynamically populated here -->
+                    </div>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span class="order-subtotal">₹0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping:</span>
+                        <span class="order-shipping">₹0</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Grand Total:</span>
+                        <span class="order-total">₹0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 
+    Footer Section
+    Purpose: Site navigation
+    Features: Responsive grid
+    -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natural Stone Hub</h3>
+                <p>Your one-stop destination for premium interior & exterior solutions!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Natural Stone Hub. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
