@@ -616,9 +616,9 @@ function setupFormStorage(form, storageKey) {
                     }
                     
                     // Redirect to index.html after 1.5 seconds
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1500);
+                    //setTimeout(() => {
+                        //window.location.href = 'index.html';
+                    //}, 1500);
                 }
             }
             // For contact form and any other regular form
