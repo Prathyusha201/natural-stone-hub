@@ -14,16 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   
-    if (!currentUser) {
-      container.innerHTML = `
-        <div class="login-prompt">
-          <p>Please log in to view your order history.</p>
-          <button class="login-btn" onclick="openLoginModal()">Login</button>
-        </div>
-      `;
-      return;
-    }
-  
     const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
     const userOrders = filterUserOrders(allOrders, currentUser);
 
