@@ -14,6 +14,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function saveOrderToLocalStorage(order) {
+    // Get current user
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    // Add user ID to order
+    if (currentUser && currentUser.id) {
+        order.userId = currentUser.id;
+        if (currentUser.email) {
+            order.userEmail = currentUser.email;
+        }
+        console.log("Adding user ID to order:", currentUser.id);
+    } else {
+        console.log("No logged in user found!");
+        // Create a temporary user ID if no user is logged in
+        order.userId = "guest-" + Date.now();
+        
+        // Also store the email from shipping info if available
+        if (order.shippingInfo && order.shippingInfo.email) {
+            order.userEmail = order.shippingInfo.email;
+            console.log("Added guest email from shipping info:", order.userEmail);
+        }
+    }
+    
+    // Get all orders from localStorage
+    let allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    console.log("Existing orders in localStorage:", allOrders.length);
+    
+    // Check if order already exists
+    const existingOrderIndex = allOrders.findIndex(o => o.id === order.id);
+    
+    if (existingOrderIndex >= 0) {
+        // Update existing order
+        allOrders[existingOrderIndex] = order;
+        console.log("Updated existing order in localStorage:", order.id);
+    } else {
+        // Add new order
+        allOrders.push(order);
+        console.log("Added new order to localStorage:", order.id);
+    }
+    
+    // Save back to localStorage
+    localStorage.setItem('orders', JSON.stringify(allOrders));
+    
+    // Verify order was saved
+    const verifyOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    const savedOrder = verifyOrders.find(o => o.id === order.id);
+    if (savedOrder) {
+        console.log("Order verified in localStorage:", order.id);
+    } else {
+        console.error("Failed to save order to localStorage!");
+    }
+}
+
 /**
  * Displays the order confirmation details
  */
@@ -92,6 +145,9 @@ function displayOrderDetails(order) {
     
     // Set estimated delivery
     document.getElementById('estimatedDeliveryValue').textContent = formatDate(order.estimatedDelivery);
+
+    // IMPORTANT: Save the order to localStorage
+    saveOrderToLocalStorage(order);
 }
 
 /**
