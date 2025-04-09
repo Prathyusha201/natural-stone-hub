@@ -221,6 +221,19 @@ function removeFromCart(productId) {
     saveCart();
     updateCartIcon();
     renderCart();
+    updateSummaryDisplay();
+}
+
+// Add a new function to update the summary fields
+function updateSummaryDisplay() {
+    // Update summary values
+    const subtotalEl = document.querySelector('.cart-subtotal');
+    const shippingEl = document.querySelector('.cart-shipping');
+    const totalEl = document.querySelector('.cart-total');
+    
+    if (subtotalEl) subtotalEl.textContent = `₹${cart.subtotal.toFixed(2)}`;
+    if (shippingEl) shippingEl.textContent = cart.shipping > 0 ? `₹${cart.shipping.toFixed(2)}` : 'FREE';
+    if (totalEl) totalEl.textContent = `₹${cart.total.toFixed(2)}`;
 }
 
 /**
@@ -262,7 +275,19 @@ function renderCart() {
     
     if (cart.items.length === 0) {
         console.log("Cart is empty, showing empty message");
-        cartItemsContainer.innerHTML = '<div class="empty-cart-message">Your cart is empty.</div>';
+        cartItemsContainer.innerHTML = `
+            <div class="empty-cart-message">
+                Your cart is empty.
+                <div style="margin-top: 20px;">
+                    <a href="products-catalog.html" class="continue-shopping">
+                        <i class="fas fa-arrow-left" style="margin-right: 8px;"></i>Continue Shopping
+                    </a>
+                </div>
+            </div>
+        `;
+        
+        // Make sure to update summary to zero
+        updateSummaryDisplay();
         return;
     }
     
@@ -294,14 +319,8 @@ function renderCart() {
     
     cartItemsContainer.innerHTML = cartHTML;
     
-    // Update summary values
-    const subtotalEl = document.querySelector('.cart-subtotal');
-    const shippingEl = document.querySelector('.cart-shipping');
-    const totalEl = document.querySelector('.cart-total');
-    
-    if (subtotalEl) subtotalEl.textContent = `₹${cart.subtotal.toFixed(2)}`;
-    if (shippingEl) shippingEl.textContent = cart.shipping > 0 ? `₹${cart.shipping.toFixed(2)}` : 'FREE';
-    if (totalEl) totalEl.textContent = `₹${cart.total.toFixed(2)}`;
+    // Update summary display
+    updateSummaryDisplay();
     
     // Add event listeners to the newly created elements
     const quantityBtns = document.querySelectorAll('.quantity-btn');
@@ -392,10 +411,19 @@ function handleQuantityInputChange(event) {
     const productId = cartItem.dataset.id;
     let quantity = parseInt(input.value);
     
-    // Ensure quantity is at least 1
-    quantity = Math.max(1, quantity);
-    input.value = quantity;
+    // If quantity is zero or less, remove the item
+    if (quantity <= 0) {
+        if (confirm('Are you sure you want to remove this item from your cart?')) {
+            removeFromCart(productId);
+        } else {
+            // If user cancels, reset quantity to 1
+            input.value = 1;
+            updateQuantity(productId, 1);
+        }
+        return;
+    }
     
+    // Update with the new quantity
     updateQuantity(productId, quantity);
 }
 

@@ -249,6 +249,9 @@ function updateUserUI(email) {
         email: email,
         loginTime: new Date().toLocaleString()
     };
+
+    // Save user info to localStorage for persistence across pages
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
     
     // Create user info display container if it doesn't exist
     let userContainer = document.querySelector('.user-info-container');
@@ -257,8 +260,9 @@ function updateUserUI(email) {
         userContainer.className = 'user-info-container';
         userContainer.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: rgba(44, 62, 80, 0.95);
             color: white;
             padding: 10px 15px;
@@ -283,9 +287,14 @@ function updateUserUI(email) {
             cursor: pointer;
         ">Logout</button>
     `;
+
+    userContainer.style.alignItems = "center";
     
     // Add logout button functionality
     document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+    // Disable registration options
+    disableRegistrationOptions();
 }
 
 /**
@@ -308,12 +317,16 @@ function handleLogout() {
         
         // Clear current user
         currentUser = null;
+        localStorage.removeItem('currentUser');
         
         // Remove user info container
         const userContainer = document.querySelector('.user-info-container');
         if (userContainer) {
             userContainer.remove();
         }
+
+        // Re-enable registration options
+        enableRegistrationOptions();
         
         // Show logout notification
         const notification = document.createElement('div');
@@ -333,8 +346,72 @@ function handleLogout() {
         // Remove notification after 3 seconds
         setTimeout(() => notification.remove(), 3000);
         
-        // Redirect to home page or refresh
-        window.location.reload();
+        // Redirect to home page
+        window.location.href = 'index.html';
+    }
+}
+
+/**
+ * Checks if user is logged in and updates UI accordingly
+ */
+function checkUserLogin() {
+    const savedUser = localStorage.getItem('currentUser');
+    
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateUserUI(currentUser.email);
+        
+        // If on login or register page, redirect to home
+        const currentPage = window.location.pathname.split('/').pop();
+        if (currentPage === 'login.html' || currentPage === 'register.html') {
+            window.location.href = 'index.html';
+        }
+    }
+}
+
+/**
+ * Disables registration options when user is logged in
+ */
+function disableRegistrationOptions() {
+    // Disable registration links
+    document.querySelectorAll('a[href="register.html"]').forEach(link => {
+        link.style.pointerEvents = 'none';
+        link.style.opacity = '0.5';
+        link.style.textDecoration = 'line-through';
+        link.setAttribute('title', 'Please log out first');
+    });
+    
+    // Disable registration modals
+    const registerModal = document.getElementById('register-modal');
+    if (registerModal) {
+        const modalTriggers = document.querySelectorAll('[data-target="#register-modal"]');
+        modalTriggers.forEach(trigger => {
+            trigger.style.pointerEvents = 'none';
+            trigger.style.opacity = '0.5';
+        });
+    }
+}
+
+/**
+ * Re-enables registration options after logout
+ */
+function enableRegistrationOptions() {
+    // Re-enable registration links
+    document.querySelectorAll('a[href="register.html"]').forEach(link => {
+        link.style.pointerEvents = 'auto';
+        link.style.opacity = '1';
+        link.style.textDecoration = 'none';
+        link.removeAttribute('title');
+    });
+    
+    // Re-enable registration modals
+    const registerModal = document.getElementById('register-modal');
+    if (registerModal) {
+        const modalTriggers = document.querySelectorAll('[data-target="#register-modal"]');
+        modalTriggers.forEach(trigger => {
+            trigger.style.pointerEvents = 'auto';
+            trigger.style.opacity = '1';
+        });
     }
 }
 
@@ -616,9 +693,9 @@ function setupFormStorage(form, storageKey) {
                     }
                     
                     // Redirect to index.html after 1.5 seconds
-                    //setTimeout(() => {
-                        //window.location.href = 'index.html';
-                    //}, 1500);
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
                 }
             }
             // For contact form and any other regular form
@@ -878,4 +955,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLocalStorage();
     setupEventHandlers();
     addPasswordToggle();
+    checkUserLogin();
 });

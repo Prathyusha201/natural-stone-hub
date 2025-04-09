@@ -1,5 +1,5 @@
 // checkout.js - Checkout functionality for Natural Stone Hub website
-// Author: Prathyusha M
+// Author: Prathyusha M (Modified with enhancements)
 // Last Updated: 2025
 // Description: Handles the checkout process including form validation,
 // payment processing, and order completion
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderOrderSummary();
     setupPaymentMethodToggle();
     setupFormValidation();
+    setupIndividualFieldValidation();
 });
 
 /**
@@ -38,6 +39,246 @@ function setupPaymentMethodToggle() {
             }
         });
     });
+}
+
+/**
+ * Sets up individual field validation with immediate feedback
+ */
+function setupIndividualFieldValidation() {
+    // Full Name validation
+    const fullNameInput = document.getElementById('fullName');
+    fullNameInput.addEventListener('blur', () => {
+        const value = fullNameInput.value.trim();
+        if (value === '') {
+            showFieldError(fullNameInput, 'Please enter your full name');
+        } else if (value.length < 3) {
+            showFieldError(fullNameInput, 'Name must be at least 3 characters');
+        } else {
+            clearFieldError(fullNameInput);
+            showFieldSuccess(fullNameInput);
+        }
+    });
+
+    // Email validation
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('blur', () => {
+        const value = emailInput.value.trim();
+        if (value === '') {
+            showFieldError(emailInput, 'Please enter your email address');
+        } else if (!isValidEmail(value)) {
+            showFieldError(emailInput, 'Please enter a valid email address');
+        } else {
+            clearFieldError(emailInput);
+            showFieldSuccess(emailInput);
+        }
+    });
+
+    // Phone validation
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('blur', () => {
+        const value = phoneInput.value.trim();
+        if (value === '') {
+            showFieldError(phoneInput, 'Please enter your phone number');
+        } else if (value.length !== 10) {
+            showFieldError(phoneInput, 'Phone number must be 10 digits');
+        } else {
+            clearFieldError(phoneInput);
+            showFieldSuccess(phoneInput);
+        }
+    });
+
+    // Address validation
+    const addressInput = document.getElementById('address');
+    addressInput.addEventListener('blur', () => {
+        const value = addressInput.value.trim();
+        if (value === '') {
+            showFieldError(addressInput, 'Please enter your address');
+        } else if (value.length < 5) {
+            showFieldError(addressInput, 'Please enter a complete address');
+        } else {
+            clearFieldError(addressInput);
+            showFieldSuccess(addressInput);
+        }
+    });
+
+    // City validation
+    const cityInput = document.getElementById('city');
+    cityInput.addEventListener('blur', () => {
+        const value = cityInput.value.trim();
+        if (value === '') {
+            showFieldError(cityInput, 'Please enter your city');
+        } else {
+            clearFieldError(cityInput);
+            showFieldSuccess(cityInput);
+        }
+    });
+
+    // State validation
+    const stateInput = document.getElementById('state');
+    stateInput.addEventListener('blur', () => {
+        const value = stateInput.value.trim();
+        if (value === '') {
+            showFieldError(stateInput, 'Please enter your state');
+        } else {
+            clearFieldError(stateInput);
+            showFieldSuccess(stateInput);
+        }
+    });
+
+    // Zip Code validation
+    const zipCodeInput = document.getElementById('zipCode');
+    zipCodeInput.addEventListener('blur', () => {
+        const value = zipCodeInput.value.trim();
+        if (value === '') {
+            showFieldError(zipCodeInput, 'Please enter your postal code');
+        } else if (value.length !== 6) {
+            showFieldError(zipCodeInput, 'Postal code must be 6 digits');
+        } else {
+            clearFieldError(zipCodeInput);
+            showFieldSuccess(zipCodeInput);
+        }
+    });
+
+    // Card Number validation
+    const cardNumberInput = document.getElementById('cardNumber');
+    cardNumberInput.addEventListener('blur', () => {
+        const value = cardNumberInput.value.trim();
+        if (value === '') {
+            showFieldError(cardNumberInput, 'Please enter your card number');
+        } else if (value.replace(/\s/g, '').length !== 16) {
+            showFieldError(cardNumberInput, 'Card number must be 16 digits');
+        } else {
+            clearFieldError(cardNumberInput);
+            showFieldSuccess(cardNumberInput);
+        }
+    });
+
+    // Expiry Date validation
+    const expiryDateInput = document.getElementById('expiryDate');
+    expiryDateInput.addEventListener('blur', () => {
+        const value = expiryDateInput.value.trim();
+        if (value === '') {
+            showFieldError(expiryDateInput, 'Please enter card expiry date');
+        } else if (!isValidExpiryDate(value)) {
+            showFieldError(expiryDateInput, 'Invalid expiry date (MM/YY)');
+        } else {
+            clearFieldError(expiryDateInput);
+            showFieldSuccess(expiryDateInput);
+        }
+    });
+
+    // CVV validation
+    const cvvInput = document.getElementById('cvv');
+    cvvInput.addEventListener('blur', () => {
+        const value = cvvInput.value.trim();
+        if (value === '') {
+            showFieldError(cvvInput, 'Please enter CVV');
+        } else if (value.length < 3 || value.length > 4) {
+            showFieldError(cvvInput, 'CVV must be 3-4 digits');
+        } else {
+            clearFieldError(cvvInput);
+            showFieldSuccess(cvvInput);
+        }
+    });
+
+    // Card Name validation
+    const cardNameInput = document.getElementById('cardName');
+    cardNameInput.addEventListener('blur', () => {
+        const value = cardNameInput.value.trim();
+        if (value === '') {
+            showFieldError(cardNameInput, 'Please enter name on card');
+        } else if (value.length < 3) {
+            showFieldError(cardNameInput, 'Please enter complete name');
+        } else {
+            clearFieldError(cardNameInput);
+            showFieldSuccess(cardNameInput);
+        }
+    });
+
+    // UPI ID validation
+    const upiIdInput = document.getElementById('upiId');
+    upiIdInput.addEventListener('blur', () => {
+        const value = upiIdInput.value.trim();
+        if (value === '') {
+            showFieldError(upiIdInput, 'Please enter your UPI ID');
+        } else if (!isValidUpiId(value)) {
+            showFieldError(upiIdInput, 'Invalid UPI ID format (username@bank)');
+        } else {
+            clearFieldError(upiIdInput);
+            showFieldSuccess(upiIdInput);
+        }
+    });
+}
+
+/**
+ * Shows error message for a field
+ * @param {HTMLElement} input - Input element
+ * @param {string} message - Error message to display
+ */
+function showFieldError(input, message) {
+    // Clear any existing error/success
+    clearFieldError(input);
+    
+    // Create error message element
+    const errorElement = document.createElement('div');
+    errorElement.className = 'field-error';
+    errorElement.textContent = message;
+    errorElement.style.color = '#e74c3c';
+    errorElement.style.fontSize = '12px';
+    errorElement.style.marginTop = '5px';
+    
+    // Add red border to input
+    input.style.borderColor = '#e74c3c';
+    input.style.boxShadow = '0 0 0 1px #e74c3c';
+    
+    // Add error message after input
+    input.parentNode.appendChild(errorElement);
+}
+
+/**
+ * Shows success indicator for a field
+ * @param {HTMLElement} input - Input element
+ */
+function showFieldSuccess(input) {
+    // Add green border to input
+    input.style.borderColor = '#27ae60';
+    input.style.boxShadow = '0 0 0 1px #27ae60';
+    
+    // Add check icon (optional)
+    const successIcon = document.createElement('span');
+    successIcon.className = 'success-icon';
+    successIcon.innerHTML = '✓';
+    successIcon.style.color = '#27ae60';
+    successIcon.style.position = 'absolute';
+    successIcon.style.right = '10px';
+    successIcon.style.top = '50%';
+    successIcon.style.transform = 'translateY(-50%)';
+    
+    // Make parent relative for icon positioning
+    if (input.parentNode.style.position !== 'relative') {
+        input.parentNode.style.position = 'relative';
+    }
+    
+    // Add success icon after input
+    input.parentNode.appendChild(successIcon);
+}
+
+/**
+ * Clears error/success indicators for a field
+ * @param {HTMLElement} input - Input element
+ */
+function clearFieldError(input) {
+    // Remove error messages
+    const errorElements = input.parentNode.querySelectorAll('.field-error');
+    errorElements.forEach(el => el.remove());
+    
+    // Remove success icons
+    const successIcons = input.parentNode.querySelectorAll('.success-icon');
+    successIcons.forEach(el => el.remove());
+    
+    // Reset input styling
+    input.style.borderColor = '';
+    input.style.boxShadow = '';
 }
 
 /**
@@ -154,89 +395,99 @@ function setupPhoneNumberValidation() {
  * @returns {boolean} - Whether the form is valid
  */
 function validateCheckoutForm() {
+    let isValid = true;
+    
     // Get form fields
-    const fullName = document.getElementById('fullName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const state = document.getElementById('state').value.trim();
-    const zipCode = document.getElementById('zipCode').value.trim();
+    const fullName = document.getElementById('fullName');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const address = document.getElementById('address');
+    const city = document.getElementById('city');
+    const state = document.getElementById('state');
+    const zipCode = document.getElementById('zipCode');
     
-    // Basic validation
-    if (fullName === '') {
-        showNotification(null, 'Please enter your full name', 'error');
-        return false;
+    // Basic validation - trigger blur events to show errors
+    if (fullName.value.trim() === '') {
+        showFieldError(fullName, 'Please enter your full name');
+        isValid = false;
     }
     
-    if (email === '' || !isValidEmail(email)) {
-        showNotification(null, 'Please enter a valid email address', 'error');
-        return false;
+    if (email.value.trim() === '' || !isValidEmail(email.value.trim())) {
+        showFieldError(email, 'Please enter a valid email address');
+        isValid = false;
     }
     
-    if (phone === '' || phone.length < 10) {
-        showNotification(null, 'Please enter a valid phone number', 'error');
-        return false;
+    if (phone.value.trim() === '' || phone.value.trim().length < 10) {
+        showFieldError(phone, 'Please enter a valid phone number');
+        isValid = false;
     }
     
-    if (address === '') {
-        showNotification(null, 'Please enter your address', 'error');
-        return false;
+    if (address.value.trim() === '') {
+        showFieldError(address, 'Please enter your address');
+        isValid = false;
     }
     
-    if (city === '') {
-        showNotification(null, 'Please enter your city', 'error');
-        return false;
+    if (city.value.trim() === '') {
+        showFieldError(city, 'Please enter your city');
+        isValid = false;
     }
     
-    if (state === '') {
-        showNotification(null, 'Please enter your state', 'error');
-        return false;
+    if (state.value.trim() === '') {
+        showFieldError(state, 'Please enter your state');
+        isValid = false;
     }
     
-    if (zipCode === '' || zipCode.length < 6) {
-        showNotification(null, 'Please enter a valid postal code', 'error');
-        return false;
+    if (zipCode.value.trim() === '' || zipCode.value.trim().length < 6) {
+        showFieldError(zipCode, 'Please enter a valid postal code');
+        isValid = false;
     }
     
     // Payment method-specific validation
     const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     
     if (selectedPaymentMethod === 'creditCard') {
-        const cardNumber = document.getElementById('cardNumber').value.trim();
-        const expiryDate = document.getElementById('expiryDate').value.trim();
-        const cvv = document.getElementById('cvv').value.trim();
-        const cardName = document.getElementById('cardName').value.trim();
+        const cardNumber = document.getElementById('cardNumber');
+        const expiryDate = document.getElementById('expiryDate');
+        const cvv = document.getElementById('cvv');
+        const cardName = document.getElementById('cardName');
         
-        if (cardNumber === '' || cardNumber.replace(/\s/g, '').length < 16) {
-            showNotification(null, 'Please enter a valid card number', 'error');
-            return false;
+        if (cardNumber.value.trim() === '' || cardNumber.value.replace(/\s/g, '').length < 16) {
+            showFieldError(cardNumber, 'Please enter a valid card number');
+            isValid = false;
         }
         
-        if (expiryDate === '' || !isValidExpiryDate(expiryDate)) {
-            showNotification(null, 'Please enter a valid expiry date (MM/YY)', 'error');
-            return false;
+        if (expiryDate.value.trim() === '' || !isValidExpiryDate(expiryDate.value.trim())) {
+            showFieldError(expiryDate, 'Please enter a valid expiry date (MM/YY)');
+            isValid = false;
         }
         
-        if (cvv === '' || cvv.length < 3) {
-            showNotification(null, 'Please enter a valid CVV', 'error');
-            return false;
+        if (cvv.value.trim() === '' || cvv.value.trim().length < 3) {
+            showFieldError(cvv, 'Please enter a valid CVV');
+            isValid = false;
         }
         
-        if (cardName === '') {
-            showNotification(null, 'Please enter the name on your card', 'error');
-            return false;
+        if (cardName.value.trim() === '') {
+            showFieldError(cardName, 'Please enter the name on your card');
+            isValid = false;
         }
     } else if (selectedPaymentMethod === 'upi') {
-        const upiId = document.getElementById('upiId').value.trim();
+        const upiId = document.getElementById('upiId');
         
-        if (upiId === '' || !isValidUpiId(upiId)) {
-            showNotification(null, 'Please enter a valid UPI ID', 'error');
-            return false;
+        if (upiId.value.trim() === '' || !isValidUpiId(upiId.value.trim())) {
+            showFieldError(upiId, 'Please enter a valid UPI ID');
+            isValid = false;
         }
     }
     
-    return true;
+    // If not valid, scroll to first error
+    if (!isValid) {
+        const firstError = document.querySelector('.field-error');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    
+    return isValid;
 }
 
 /**
@@ -404,23 +655,28 @@ function showNotification(element, message, type = 'success') {
     notification.style.cssText = `
         position: fixed;
         top: 20px;
-        right: 20px;
-        padding: 10px 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 25px;
         background-color: ${type === 'success' ? '#27ae60' : '#e74c3c'};
         color: white;
-        border-radius: 4px;
+        border-radius: 8px;
         z-index: 9999;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        font-weight: 500;
         animation: fadeInOut 3s forwards;
+        min-width: 280px;
+        text-align: center;
     `;
     
     // Add animation style
     const style = document.createElement('style');
     style.textContent = `
         @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-20px); }
-            10% { opacity: 1; transform: translateY(0); }
-            90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
+            0% { opacity: 0; transform: translate(-50%, -20px); }
+            10% { opacity: 1; transform: translate(-50%, 0); }
+            90% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -20px); }
         }
     `;
     document.head.appendChild(style);
@@ -452,6 +708,13 @@ function loadCart() {
 }
 
 /**
+ * Clears cart data from localStorage
+ */
+function clearCart() {
+    localStorage.removeItem('cart');
+}
+
+/**
  * Renders the order summary on the checkout page
  */
 function renderOrderSummary() {
@@ -460,6 +723,21 @@ function renderOrderSummary() {
     if (!orderItemsContainer) return;
     
     let orderHTML = '';
+    
+    if (cart.items.length === 0) {
+        orderHTML = '<div class="empty-cart-message">Your cart is empty</div>';
+        orderItemsContainer.innerHTML = orderHTML;
+        
+        // Disable the place order button
+        const placeOrderBtn = document.querySelector('.place-order-btn');
+        if (placeOrderBtn) {
+            placeOrderBtn.disabled = true;
+            placeOrderBtn.style.opacity = '0.5';
+            placeOrderBtn.style.cursor = 'not-allowed';
+        }
+        
+        return;
+    }
     
     cart.items.forEach(item => {
         orderHTML += `

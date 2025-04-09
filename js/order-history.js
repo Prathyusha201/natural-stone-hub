@@ -1,4 +1,3 @@
-
 // order-history.js - Order History functionality for Natural Stone Hub website
 // Author: Prathyusha M
 // Last Updated: 2025

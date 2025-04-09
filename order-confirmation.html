@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Natural Stone Hub</title>
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Order Confirmation Specific Styles */
+        .order-confirmation-section {
+            padding: 50px 0;
+            min-height: 70vh;
+        }
+        
+        .confirmation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            top: 3rem;
+        }
+        
+        .confirmation-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+        
+        .confirmation-header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: white;
+        }
+        
+        .confirmation-header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+        
+        .confirmation-content {
+            padding: 30px;
+        }
+        
+        .order-info {
+            margin-bottom: 30px;
+        }
+        
+        .order-info-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .order-info-label {
+            font-weight: 600;
+            width: 150px;
+            color: #4b5563;
+        }
+        
+        .order-info-value {
+            flex: 1;
+        }
+        
+        .order-products {
+            margin-bottom: 30px;
+        }
+        
+        .order-product {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .product-details {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .product-quantity {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .product-price {
+            font-weight: 500;
+            text-align: right;
+            min-width: 100px;
+        }
+        
+        .order-summary {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .order-total-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .shipping-info {
+            margin-bottom: 30px;
+        }
+        
+        .shipping-address {
+            background-color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+        
+        .thank-you-message {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-message h3 {
+            color: #3a5a40;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .action-button {
+            background-color: #3a5a40;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .action-button.secondary {
+            background-color: #6b7280;
+        }
+        
+        .action-button:hover {
+            background-color: #344e41;
+        }
+        
+        .action-button.secondary:hover {
+            background-color: #4b5563;
+        }
+        
+        .delivery-status {
+            margin-top: 30px;
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #3a5a40;
+        }
+        
+        .delivery-status h3 {
+            margin-top: 0;
+            color: #3a5a40;
+        }
+        
+        .delivery-status p {
+            margin-bottom: 0;
+        }
+        
+        .tracking-info {
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .confirmation-container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            .confirmation-header {
+                padding: 20px;
+            }
+            
+            .confirmation-content {
+                padding: 20px;
+            }
+            
+            .order-info-item {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+            
+            .order-info-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* Print styles for invoice */
+        @media print {
+            header, footer, .action-buttons {
+                display: none;
+            }
+            
+            .confirmation-container {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .confirmation-header {
+                background-color: #f9fafb;
+                color: #000;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+    </style>
+    <script src="./js/order-confirmation.js" defer></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="./images/logo.jpg" alt="Natural Stone Hub Logo">
+            </div>
+        </nav>
+    </header>
+
+    <!-- Order Confirmation Section -->
+    <section class="order-confirmation-section">
+        <div class="container">
+            <div class="confirmation-container">
+                <div class="confirmation-header">
+                    <h2>Order Confirmed</h2>
+                    <p>Thank you for shopping with Natural Stone Hub!</p>
+                </div>
+                
+                <div class="confirmation-content">
+                    <div class="order-info">
+                        <h3>Order Information</h3>
+                        <div class="order-info-item">
+                            <div class="order-info-label">Order ID:</div>
+                            <div id="orderIdValue" class="order-info-value">-</div>
+                        </div>
+                        <div class="order-info-item">
+                            <div class="order-info-label">Order Date:</div>
+                            <div id="orderDateValue" class="order-info-value">-</div>
+                        </div>
+                        <div class="order-info-item">
+                            <div class="order-info-label">Payment Method:</div>
+                            <div id="paymentMethodValue" class="order-info-value">-</div>
+                        </div>
+                        <div class="order-info-item">
+                            <div class="order-info-label">Order Status:</div>
+                            <div id="orderStatusValue" class="order-info-value">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="shipping-info">
+                        <h3>Shipping Information</h3>
+                        <div class="shipping-address" id="shippingAddressValue">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="order-products">
+                        <h3>Order Details</h3>
+                        <div id="orderProductsList">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                        
+                        <div class="order-summary">
+                            <div class="order-total-row">
+                                <div>Subtotal:</div>
+                                <div id="subtotalValue">₹0.00</div>
+                            </div>
+                            <div class="order-total-row">
+                                <div>Shipping:</div>
+                                <div id="shippingValue">₹0.00</div>
+                            </div>
+                            <div class="order-total-row">
+                                <div>Total:</div>
+                                <div id="totalValue">₹0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-status">
+                        <h3>Delivery Status</h3>
+                        <p>Your order is being processed and will be shipped soon.</p>
+                        <p class="tracking-info">Estimated Delivery: <span id="estimatedDeliveryValue">-</span></p>
+                    </div>
+                    
+                    <div class="thank-you-message">
+                        <h3>Thank You for Your Purchase!</h3>
+                        <p>We appreciate your business. If you have any questions, please contact our customer service.</p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="products-catalog.html" class="action-button">Continue Shopping</a>
+                        <button id="printInvoiceBtn" class="action-button secondary">Print Invoice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Natural Stone Hub</h3>
+                <p>Your one-stop destination for premium interior & exterior solutions!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Natural Stone Hub. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
