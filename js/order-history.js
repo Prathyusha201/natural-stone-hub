@@ -17,12 +17,73 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
+    // Initialize mock data if no orders exist (for testing/demo purposes)
+    initializeMockOrdersIfNeeded();
+    
     // Load and display orders
     loadOrderHistory();
     
     // Update cart icon if present
     updateCartIcon();
 });
+
+/**
+ * Initialize mock order data if none exists (for demo purposes)
+ */
+function initializeMockOrdersIfNeeded() {
+    const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    // Only add mock data if there are no orders for the current user
+    const userOrders = allOrders.filter(order => order.userId === currentUser.id);
+    
+    if (userOrders.length === 0) {
+        // Create sample order
+        const mockOrder = {
+            id: 'ORD' + Date.now().toString().substring(6),
+            userId: currentUser.id,
+            orderDate: new Date().toISOString(),
+            paymentMethod: 'creditCard',
+            status: 'processing',
+            items: [
+                {
+                    id: 'product1',
+                    name: 'Marble Countertop (White Carrara)',
+                    price: 12500,
+                    quantity: 1
+                },
+                {
+                    id: 'product2',
+                    name: 'Granite Floor Tiles',
+                    price: 2300,
+                    quantity: 2
+                }
+            ],
+            subtotal: 17100,
+            shipping: 500,
+            total: 17600,
+            shippingInfo: {
+                fullName: currentUser.name || 'John Doe',
+                address: '123 Stone Avenue',
+                city: 'Bangalore',
+                state: 'Karnataka',
+                zipCode: '560001',
+                phone: '9876543210',
+                email: currentUser.email || 'customer@example.com'
+            },
+            estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days from now
+        };
+        
+        // Add mock order to orders array
+        allOrders.push(mockOrder);
+        
+        // Save to localStorage
+        localStorage.setItem('orders', JSON.stringify(allOrders));
+        
+        // Also save to sessionStorage so it appears in order confirmation
+        sessionStorage.setItem('lastOrder', JSON.stringify(mockOrder));
+    }
+}
 
 /**
  * Shows login prompt for non-logged in users
@@ -171,7 +232,7 @@ function loadOrderHistory() {
                     
                     <div class="order-actions">
                         <button class="view-details-btn" data-order-id="${order.id}">View Details</button>
-                        ${order.status === 'pending' ? `<button class="cancel-order-btn" data-order-id="${order.id}">Cancel Order</button>` : ''}
+                        ${order.status === 'pending' || order.status === 'processing' ? `<button class="cancel-order-btn" data-order-id="${order.id}">Cancel Order</button>` : ''}
                     </div>
                 </div>
             `;
@@ -315,7 +376,7 @@ function viewOrderDetails(orderId) {
                 </div>
             </div>
             <div class="modal-footer">
-                ${order.status === 'pending' ? `<button class="cancel-order-btn" data-order-id="${order.id}">Cancel Order</button>` : ''}
+                ${order.status === 'pending' || order.status === 'processing' ? `<button class="cancel-order-btn" data-order-id="${order.id}">Cancel Order</button>` : ''}
                 <button class="close-modal-btn">Close</button>
             </div>
         </div>

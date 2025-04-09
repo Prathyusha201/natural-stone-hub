@@ -1,29 +1,341 @@
-<!-- 
-===========================================
-Natural Stone Hub Website
-===========================================
-Version: 1.0
-Author: Prathyusha M
-Last Updated: 2025
-Description: Modern, responsive website for Natural Stone Hub featuring product showcase,
-gallery, services, and contact information.
-===========================================
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History - Natural Stone Hub</title>
-    <!-- External Stylesheets -->
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="./js/script.js" defer></script>
-    <script src="./js/order-history.js" defer></script>
+    <style>
+        /* Order History Specific Styles */
+        .order-history-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .order-history-title {
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 28px;
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 40px;
+            background-color: #f8f8f8;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .login-prompt p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .login-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .no-orders-message {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+            background-color: #f8f8f8;
+            border-radius: 6px;
+        }
+
+        .order-card {
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .order-info h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .order-date {
+            margin: 5px 0 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .order-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-pending {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .status-processing {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .status-shipped {
+            background-color: #9b59b6;
+            color: white;
+        }
+
+        .status-delivered {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .status-cancelled {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .order-details {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .order-items-summary {
+            flex: 1;
+        }
+
+        .order-item-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .more-items {
+            color: #3498db;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .order-metadata {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .label {
+            color: #777;
+        }
+
+        .value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .order-actions {
+            padding: 15px 20px;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .view-details-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cancel-order-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 6px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .modal-close {
+            font-size: 24px;
+            color: #777;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .order-status-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .order-items-list {
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-info {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-summary {
+            margin: 20px 0;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 20px 0;
+        }
+
+        .order-address-payment {
+            display: flex;
+            gap: 30px;
+        }
+
+        .shipping-info, .payment-info {
+            flex: 1;
+        }
+
+        .shipping-info h3, .payment-info h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .close-modal-btn {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .order-details {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .order-metadata {
+                max-width: none;
+            }
+            
+            .order-address-payment {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <nav class="navbar">
             <div class="logo">
@@ -38,61 +350,59 @@ gallery, services, and contact information.
         </nav>
     </header>
 
-    <!-- Order History Section -->
-    <section class="order-history-section">
-        <div class="container">
-            <h2>Your Order History</h2>
-            <div class="order-history-container">
-                <!-- Orders will be dynamically populated here -->
-                <div class="no-orders-message">You haven't placed any orders yet.</div>
+    <main>
+        <section class="page-banner">
+            <div class="container">
+                <h1>Order History</h1>
+                <p>View and manage your orders</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Modal Forms - keep on every page -->
-    <div id="login-modal" class="modal" role="dialog" aria-labelledby="loginTitle">
+        <section class="order-history-section">
+            <div class="container">
+                <h2 class="order-history-title">Your Orders</h2>
+                
+                <div class="order-history-container">
+                    <!-- Order history will be loaded here by JavaScript -->
+                    <div class="loading-spinner">Loading your orders...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="loginTitle">Login</h2>
+                <h2>Login</h2>
                 <a href="#" class="modal-close" aria-label="Close">&times;</a>
             </div>
-            <form class="auth-form" novalidate>
-                <input type="email" placeholder="Email" required 
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                       title="Please enter a valid email address">
-                <input type="password" placeholder="Password" required
-                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-                       title="Password must be at least 8 characters long and include at least one letter, one number, and one special character">
-                <button type="submit">Login</button>
-            </form>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn primary-btn">Login</button>
+                    </div>
+                    <p class="form-footer">
+                        Don't have an account? <a href="signup.html">Sign up</a>
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div id="register-modal" class="modal" role="dialog" aria-labelledby="registerTitle">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="registerTitle">Register</h2>
-                <a href="#" class="modal-close" aria-label="Close">&times;</a>
-            </div>
-            <form class="auth-form" novalidate>
-                <input type="text" placeholder="Full Name" required
-                       pattern="[A-Za-z\s]{2,}"
-                       title="Please enter at least 2 characters">
-                <input type="email" placeholder="Email" required
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                       title="Please enter a valid email address">
-                <input type="password" placeholder="Password" required
-                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-                       title="Password must be at least 8 characters long and include at least one letter, one number, and one special character">
-                <input type="password" placeholder="Confirm Password" required
-                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-                       title="Password must be at least 8 characters long and include at least one letter, one number, and one special character">
-                <button type="submit">Register</button>
-            </form>
-        </div>
-    </div>
+    <!-- Scripts -->
+    <script src="js/order-history.js"></script>
+    <script src="js/script.js"></script>
 
-    <!-- 
+        <!-- 
     Footer Section
     Purpose: Site navigation
     Features: Responsive grid
